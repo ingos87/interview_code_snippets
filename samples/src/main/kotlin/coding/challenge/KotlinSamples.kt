@@ -1,6 +1,7 @@
-package de.deutschepost.enplify.analyzer
+package coding.challenge
 
 import java.sql.DriverManager
+import java.sql.DriverManager.println
 import java.sql.ResultSet
 import java.sql.SQLException
 
@@ -15,7 +16,7 @@ class KotlinSamples {
 
     fun someArray() {
         val ary = Array(Int.MAX_VALUE) { LongArray(Int.MAX_VALUE) }
-        println(ary.size)
+        println(ary.size.toString())
     }
 
 
