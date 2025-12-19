@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController
 class BatchImportController(val batchImportService: BatchImportService) {
 
     @Operation(
-        summary = "Receives image metadata batch from the importer, stores them in the database" +
+        summary = "Receives image metadata batch, stores it in the database" +
             " and creates a job to start the asynchronous processing of the batch.",
     )
     @ApiResponses(
