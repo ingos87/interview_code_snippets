@@ -11,6 +11,9 @@ repositories {
 }
 
 dependencies {
+    implementation("org.springframework.boot:spring-boot-starter-web:3.2.0")
+    implementation("org.apache.pdfbox:pdfbox:2.0.29")
+    testImplementation("org.springframework.boot:spring-boot-starter-test:3.2.0")
     testImplementation("io.kotest:kotest-runner-junit5-jvm:4.6.0")
 }
 

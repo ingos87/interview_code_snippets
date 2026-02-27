@@ -1,3 +1,6 @@
 .idea/
 samples.iml
 /.gradle/
+
+/build/
+/build/*

@@ -1,14 +1,22 @@
 package address_area_layout;
 
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
+
+import org.springframework.stereotype.Service;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.rendering.PDFRenderer;
 
 @Service
 public class AddressAreaValidationService {
 
     public ValidationResult validatePdf(byte[] pdfBytes) throws IOException {
 
-        PDDocument document = PDDocument.load(pdfBytes);
+        InputStream inputStream = new ByteArrayInputStream(pdfBytes);
+        PDDocument document = PDDocument.load(inputStream);
 
         PDFRenderer renderer = new PDFRenderer(document);
 
