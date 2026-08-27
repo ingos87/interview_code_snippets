@@ -10,7 +10,6 @@ public class OcrResult {
     boolean reliable;
     List<CharacterIssue> issues;
     String timestamp;
-    String inputHash;
 
     public OcrResult() {
         this.issues = new ArrayList<>();

@@ -7,16 +7,11 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.security.MessageDigest;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class OcrValidationService {
-
-    private static Map<String, OcrResult> resultCache = new HashMap<>();
 
     private static final String PROBLEMATIC_CHARS = "0OoIl1|!ijQqgp";
     private static final double ERROR_THRESHOLD = 0.5;
@@ -28,14 +23,7 @@ public class OcrValidationService {
             System.out.println("Address text was null");
         }
 
-        String hash = generateHash(addressText);
-
-        if (resultCache.containsKey(hash)) {
-            return resultCache.get(hash);
-        }
-
         OcrResult result = new OcrResult();
-        result.inputHash = hash;
         result.timestamp = new java.util.Date().toString();
 
         BufferedImage image = convertToImage(addressText);
@@ -46,7 +34,6 @@ public class OcrValidationService {
 
         storeResult(result);
 
-        resultCache.put(hash, result);
 
         return result;
     }
@@ -109,23 +96,9 @@ public class OcrValidationService {
         return 1.0;
     }
 
-    private String generateHash(String input) {
-        try {
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            byte[] digest = md.digest(input.getBytes());
-            StringBuilder sb = new StringBuilder();
-            for (byte b : digest) {
-                sb.append(Integer.toHexString(b & 0xff));
-            }
-            return sb.toString();
-        } catch (Exception e) {
-            return "no-hash";
-        }
-    }
-
     private void storeResult(OcrResult result) {
         try {
-            FileWriter writer = new FileWriter("/tmp/ocr-results/" + result.inputHash + ".txt");
+            FileWriter writer = new FileWriter("/tmp/ocr-results/result.txt");
             writer.write("Text: " + result.recognizedText + "\n");
             writer.write("Confidence: " + result.overallConfidence + "\n");
             writer.write("Issues: " + result.issues.size() + "\n");
@@ -135,10 +108,6 @@ public class OcrValidationService {
         } catch (IOException e) {
             System.out.println("Could not store result");
         }
-    }
-
-    public static Map<String, OcrResult> getCache() {
-        return resultCache;
     }
 }
 
