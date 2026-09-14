@@ -78,7 +78,6 @@ public class InternationalAddressValidationServiceTest {
 
     @Test
     public void testNullAddress() {
-        // This test exposes flaw #6 - null check doesn't return
         assertThrows(Exception.class, () -> {
             service.validateAddress("US", null);
         });
@@ -86,7 +85,6 @@ public class InternationalAddressValidationServiceTest {
 
     @Test
     public void testNullPostalCode() {
-        // This test exposes flaw #8 - no null check before method call
         Address address = new Address("123 Main St", "New York", null, "US");
         assertThrows(Exception.class, () -> {
             service.validateAddress("US", address);
@@ -98,7 +96,6 @@ public class InternationalAddressValidationServiceTest {
         Address address = new Address("123 Main St", "New York", "10001", "US");
         AddressValidationResult result = service.validateAddress("US", address);
 
-        // This will fail if getters are missing (flaw #2)
         assertNotNull(result.isValid());
         assertNotNull(result.getViolations());
     }
@@ -109,7 +106,6 @@ public class InternationalAddressValidationServiceTest {
         result.addViolation("CRITICAL");
         result.addViolation("CRITICAL");
 
-        // This test exposes flaw #13 - getViolationCount uses == instead of equals()
         assertEquals(2, result.getViolationCount());
     }
 }

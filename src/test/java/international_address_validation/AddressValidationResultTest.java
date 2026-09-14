@@ -18,7 +18,6 @@ public class AddressValidationResultTest {
         AddressValidationResult result = new AddressValidationResult();
         result.addViolation("Test violation");
 
-        // This will fail due to flaw #7 - broken boolean logic
         assertFalse(result.isValid());
     }
 
@@ -36,7 +35,7 @@ public class AddressValidationResultTest {
     @Test
     public void testTimestampIsSet() {
         AddressValidationResult result = new AddressValidationResult();
-        assertNotNull(result.getViolations()); // Tests that we can get violations
+        assertNotNull(result.getViolations());
     }
 }
 
