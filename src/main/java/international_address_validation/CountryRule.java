@@ -2,7 +2,6 @@ package international_address_validation;
 
 public class CountryRule {
 
-    // FLAW 4 (Easy): Public mutable fields - no encapsulation
     public String countryCode;
     public String countryName;
     public int minPostalCodeLength;
@@ -20,4 +19,5 @@ public class CountryRule {
         this.requiredFields = requiredFields;
     }
 }
+
 

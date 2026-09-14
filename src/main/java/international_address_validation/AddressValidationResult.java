@@ -18,21 +18,14 @@ public class AddressValidationResult {
 
     public void addViolation(String message) {
         this.violations.add(message);
-        // FLAW 1 (Medium): This logic is broken. Should set valid to false when violations exist
-        // but it sets valid to true instead
         this.valid = violations.size() > 0;
     }
 
-    // FLAW 2 (Easy): No getters for fields - Jackson can't serialize them
-    // REST endpoint will return empty JSON {}
-
     public int getViolationCount() {
-        // FLAW 3 (Hard): String comparison with == instead of .equals()
-        // Severity strings created with "new String(...)" will never match literals
         int count = 0;
         for (String violation : violations) {
             String severity = new String("CRITICAL");
-            if (severity == "CRITICAL") {  // Will always be false due to == comparison
+            if (severity == "CRITICAL") {
                 count++;
             }
         }

@@ -18,8 +18,6 @@ public class InternationalAddressValidationController {
 
     @PostMapping("/validate")
     public ResponseEntity<?> validateAddress(@RequestBody Map<String, String> request) {
-        // FLAW 14 (Easy): Untyped HashMap instead of proper DTO
-        // No input validation on extracted values
         String countryCode = request.get("country");
         String street = request.get("street");
         String city = request.get("city");
@@ -33,7 +31,6 @@ public class InternationalAddressValidationController {
 
     @PostMapping("/validate-batch")
     public ResponseEntity<?> validateBatch(@RequestBody Map<String, Object> request) {
-        // FLAW 15 (Hard): No size limit on batch - can cause OOM or DoS
         String country = (String) request.get("country");
         @SuppressWarnings("unchecked")
         List<Map<String, String>> addresses = (List<Map<String, String>>) request.get("addresses");
