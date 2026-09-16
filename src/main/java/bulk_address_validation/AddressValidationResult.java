@@ -8,6 +8,7 @@ public class AddressValidationResult {
 
     private boolean valid;
     private List<String> violations;
+    private String confidenceValue;
     private String timestamp;
 
     public AddressValidationResult() {
@@ -19,6 +20,10 @@ public class AddressValidationResult {
     public void addViolation(String message) {
         this.violations.add(message);
         this.valid = violations.size() > 0;
+    }
+
+    public void setConfidenceValue(String confidenceValue) {
+        this.confidenceValue = confidenceValue;
     }
 
     public int getViolationCount() {

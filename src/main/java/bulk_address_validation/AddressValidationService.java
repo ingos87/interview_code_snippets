@@ -3,13 +3,13 @@ package bulk_address_validation;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
 @Service
 public class AddressValidationService {
 
-    private static Pattern postalPattern;
     private static RuleSet ruleSet = new RuleSet("DE", "Germany", 5, 5, "\\d{5}", new String[]{"street", "city", "postalCode"});
 
     public AddressValidationResult validateAddress(Address address) {
@@ -21,6 +21,11 @@ public class AddressValidationService {
 
         validateFields(address, ruleSet, result);
         validatePostalCode(address, ruleSet, result);
+
+        ExternalAddressValidationSystemImpl externalAddressValidationSystem = new ExternalAddressValidationSystemImpl();
+        List<ExternalValidationResult> externalResults =
+                externalAddressValidationSystem.validateBulk(java.util.Collections.singletonList(address));
+        result.setConfidenceValue(Double.toString(externalResults.get(0).getConfidenceValue()));
 
         return result;
     }
